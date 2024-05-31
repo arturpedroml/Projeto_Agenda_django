@@ -1,45 +1,54 @@
-{% extends "global/base.html" %}
+{% extends 'global/base.html' %}
 
 {% block content %}
-<div class="form-wrapper">
+  <div class="form-wrapper">
 
-  <h2>Contact</h2>
+    <h2>Contact</h2>
+    
+    <form 
+      action="{{ form_action }}"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      {% csrf_token %}      
+      
+      <div class="form-content">
 
-  <form 
-    action="{% url 'contact:create' %}"
-    method="POST"
-    enctype="multipart/form-data"
-  >
+        {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+            {{ field }}
+            {{ field.errors }}
 
-    {% csrf_token %}
+            {% if field.help_text %}
+              <p class="help-text">{{ field.help_text }}</p>
+            {% endif %}
+          </div>
 
-    <div class="form-content">
-
-      {% for field in form %}
-      <div class="form-group">
-        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
-        {{ field }}
-        {{ field.errors }}
-        </div>
-      {% endfor %}
+          {% if field.name == 'picture' and field.value.url %}
+            <div class="form-group">
+              <img src="{{ field.value.url }}" alt="">
+            </div>
+          {% endif %}
+        {% endfor %}
       </div>
 
-    {% if form.non_field_errors %}
-      <div class="form-content">
-        <div class="form-group">
-          <div class="message error"></div>
-            {{ form.non_field_errors }}
+      {% if form.non_field_errors %}
+        <div class="form-content">
+          <div class="form-group">
+            <div class="message error">
+              {{ form.non_field_errors }}
+            </div>
           </div>
         </div>
-      </div>
-    {% endif %}
+      {% endif %}
 
-    <div class="form-content">
-      <div class="form-group">
-        <button class="btn" type="submit">Send</button>
+      <div class="form-content">
+        <div class="form-group">
+          <button class="btn" type="submit">Send</button>
+        </div>
       </div>
-    </div>
 
-  </form>
-</div>
+    </form>
+  </div>
 {% endblock content %}
