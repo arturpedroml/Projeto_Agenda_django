@@ -8,6 +8,7 @@ media/
 static/
 project/local_settings.py
 gunicorn-erros-log
+id_rsa.pub
 
 # Backup files # 
 *.bak 
