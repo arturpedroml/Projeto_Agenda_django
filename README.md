@@ -1,3 +1,3 @@
 # Agenda
 
-Este é o blog que foi criado no curso de Python de Luiz Otávio Miranda. 
+Este é o agenda que foi criado no curso de Python de Luiz Otávio Miranda. 
